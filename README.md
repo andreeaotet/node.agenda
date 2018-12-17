@@ -2,6 +2,17 @@
 
 A simple app  using node & express  for managing phone books
 
-commit direct din visual studio
+## Setup
 
+```
+npm install
+```
+
+## Running App
+
+```
+npm run devstart
+```
+
+open: http://localhost:3000/
 
