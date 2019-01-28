@@ -1,5 +1,6 @@
 var phoneToEdit = "";
 
+
 function getNewRow() {
     return `<tr>
                 <td><input type="text" name="firstName" placeholder="First Name"/></td>
@@ -56,6 +57,7 @@ function loadContacts() {
     });
 }
 
+
 function initEvents() {
     $("tbody").delegate("a.edit", "click", function () {
         phoneToEdit = this.getAttribute('data-id');
@@ -69,7 +71,21 @@ function initEvents() {
         $('input[name=firstName]').val(contact.firstName);
         document.querySelector('input[name=lastName]').value = contact.lastName;
     });
+
+    var findContact = document.getElementById('search');
+    findContact.addEventListener('input', searchContacts);
 }
+
+var button = document.getElementById('button1');
+
+function searchContacts() {
+        // var searchFirstName = document.querySelector('input[name=firstName]').value;
+        // console.info(searchFirstName);
+        var value = this.value;
+        console.warn('please..search', this);
+}
+
+
 
 // start app
 loadContacts();

@@ -1,13 +1,27 @@
-[{
+[
+  {
     "firstName": "Andreea",
     "lastName": "Otet",
     "phone": "0752768346"
-}, {
+  },
+  {
     "firstName": "Antonia",
     "lastName": "Mihai",
     "phone": "0754673245"
-}, {
+  },
+  {
     "firstName": "Andreea",
     "lastName": "Otet",
     "phone": "0765879435"
-}]
+  },
+  {
+    "firstName": "Rares",
+    "lastName": "Ionescu",
+    "phone": "0723638498"
+  },
+  {
+    "firstName": "Flavian",
+    "lastName": "Rus",
+    "phone": "0748947576"
+  }
+]

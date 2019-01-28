@@ -7,6 +7,9 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+// search contacts
+
+
 // /contacts/delete?phone=1234
 router.get('/delete', function (req, res, next) {
   var phone = req.query.phone;
