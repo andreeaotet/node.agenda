@@ -1,10 +1,25 @@
 var express = require('express');
+var mysql = require('mysql');
 var router = express.Router();
-var fs = require('fs');
+
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "phone_book"
+});
+
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+  pool.getConnection(function (err, connection) { //cer conexiune
+    if (err) throw err;
+    connection.query('SELECT * FROM contacts', function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.json(results);
+    })
+  })
 });
 
 
@@ -34,23 +49,21 @@ router.get('/delete', function (req, res, next) {
 
 // /contacts/create
 router.post('/create', function (req, res, next) {
-  var firstName = req.body.firstName;
-  var lastName = req.body.lastName;
-  var phone = req.body.phone;
+  pool.getConnection(function (err, connection) {
+    if (err) throw err;
 
-  var content = fs.readFileSync('public/data/contacts.json');
-  var contacts = JSON.parse(content);
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var phone = req.body.phone;
 
-  contacts.push({
-    firstName,
-    lastName,
-    phone
+    let sql = `INSERT INTO contacts (firstName, lastName, phone) VALUES ('${firstName}', '${lastName}', '${phone}')`;
+    connection.query(sql, function (err, results) {
+      if (err) throw err;
+      console.log(results);
+      res.json(results);
+      res.json({ success: true });
+    });
   });
-
-  content = JSON.stringify(contacts, null, 2);
-  fs.writeFileSync('public/data/contacts.json', content);
-
-  res.json({success: true});
 });
 
 
@@ -65,7 +78,7 @@ router.post('/update', function (req, res, next) {
   var contacts = JSON.parse(content);
 
   // update...
-  var contact = contacts.find(function(contact){
+  var contact = contacts.find(function (contact) {
     return contact.phone == oldPhone;
   });
 
@@ -76,7 +89,7 @@ router.post('/update', function (req, res, next) {
   content = JSON.stringify(contacts, null, 2);
   fs.writeFileSync('public/data/contacts.json', content);
 
-  res.json({success: true});
+  res.json({ success: true });
 });
 
 

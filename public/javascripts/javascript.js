@@ -51,7 +51,7 @@ function displayContacts(contacts) {
 }
 
 function loadContacts() {
-    $.ajax('data/contacts.json').done(function (contacts) {
+    $.ajax('contacts').done(function (contacts) {
         window.globalContacts = contacts;
         displayContacts(contacts);
     });
