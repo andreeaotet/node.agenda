@@ -1,13 +1,5 @@
 var phoneToEdit = "";
 
-function getNewRow() {
-    return `<tr>
-                <td><input type="text" name="firstName" placeholder="First Name"/></td>
-                <td><input type="text" name="lastName" placeholder="Last Name"/></td>
-                <td><input type="text" name="phone" placeholder="Phone"/></td>
-                <td><button onclick="saveContact()">Save</button></td>
-                </tr>`;
-}
 
 function saveContact() {
     var firstName = $('input[name=firstName]').val();
@@ -16,7 +8,7 @@ function saveContact() {
 
     // console.debug('saveContact...');
 
-    var actionUrl = phoneToEdit ? 'contacts/update?phone=' + phoneToEdit : 'contacts/create';
+    var actionUrl = phoneToEdit ? 'contacts/update?id=' + phoneToEdit : 'contacts/create';
     
     $.post(actionUrl, {
         firstName,  //shortcut from ES6
@@ -37,14 +29,11 @@ function displayContacts(contacts) {
                     <td>${contact.lastName}</td>
                     <td>${contact.phone}</td>
                     <td>
-                        <a href="/contacts/delete?phone=${contact.phone}">&#10006;</a>
-                        <a href="#" class="edit" data-id="${contact.phone}">&#9998;</a>
+                        <a href="/contacts/delete?id=${contact.id}">&#10006;</a>
+                        <a href="#" class="edit" data-id="${contact.id}">&#9998;</a>
                     </td>
                 </tr>`;
     });
-    // listItems.push(getNewRow());
-    var actions = getNewRow()
-    listItems.push(actions);
 
     var resultList = document.querySelector('tbody');
     resultList.innerHTML = listItems.join('');
@@ -63,11 +52,11 @@ function initEvents() {
         phoneToEdit = this.getAttribute('data-id');
 
         var contact = globalContacts.find(function (contact) {
-            return contact.phone == phoneToEdit;
+            return contact.id == phoneToEdit;
         });
         // console.warn("edit", phoneToEdit);
 
-        $('input[name=phone]').val(phoneToEdit);
+        $('input[name=phone]').val(contact.phone);
         $('input[name=firstName]').val(contact.firstName);
         document.querySelector('input[name=lastName]').value = contact.lastName;
     });
