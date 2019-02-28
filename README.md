@@ -4,7 +4,7 @@ A simple app  using node & express  for managing phone books
 
 ## Live preview
 
-Open [agenda.html](https://andreeaotet.github.io/node-agenda-web3/public/agenda.html)
+Open [agenda.html](https://andreeaotet.github.io/node.agenda/public/agenda.html)
 
 ## Content
 
