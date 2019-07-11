@@ -14,7 +14,8 @@ const pool = mysql.createPool({
 router.get('/', function (req, res, next) {
   pool.getConnection(function (err, connection) { //cer conexiune
     if (err) throw err;
-    connection.query('SELECT * FROM contacts', function (err, results) {
+    const sql = "SELECT * FROM contacts";
+    connection.query(sql, function (err, results) {
       if (err) throw err;
       console.log(results);
       res.json(results);
@@ -42,21 +43,21 @@ router.get('/delete', function (req, res, next) {
 
 
 // /contacts/create
-router.post('/create', function (req, res, next) {
-  pool.getConnection(function (err, connection) {
+router.post('/create', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
     if (err) throw err;
 
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
     var phone = req.body.phone;
 
-    let sql = `INSERT INTO contacts (firstName, lastName, phone) VALUES ('${firstName}', '${lastName}', '${phone}')`;
+    const sql = `INSERT INTO contacts (id, firstName, lastName, phone) VALUES (NULL, '${firstName}', '${lastName}', '${phone}')`;
     connection.query(sql, function (err, results) {
       if (err) throw err;
       console.log(results);
-      res.json(results);
+      // res.json(results);
       res.json({ success: true });
-    });
+    })
   });
 });
 

@@ -7,8 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-// var contactsRouter = require('./routes/contacts'); json implementare
-var contactsRouter = require('./routes/contacts.db');
+var contactsRouter = require('./routes/contacts'); //json implementare
+// var contactsRouter = require('./routes/contacts.db');
 
 var app = express();
 

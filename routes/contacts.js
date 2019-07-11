@@ -15,7 +15,7 @@ router.get('/delete', function (req, res, next) {
   var content = fs.readFileSync('public/data/contacts.json');
   var contacts = JSON.parse(content);
 
-  var remainingContacts = contacts.filter(function (contact) {
+  var remainingContacts = contacts.filter(function(contact) {
     return contact.phone != phone;
   });
 
@@ -27,8 +27,6 @@ router.get('/delete', function (req, res, next) {
   // res.json({succes: true});
 
   res.redirect('/agenda.html')
-
-  // TO DO please redirect to agenda.html
 
 });
 

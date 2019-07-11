@@ -1,27 +1,32 @@
 [
   {
+    "id": 1,
     "firstName": "Andreea",
     "lastName": "Otet",
     "phone": "0752768346"
   },
   {
+    "id": 2,
     "firstName": "Antonia",
     "lastName": "Mihai",
     "phone": "0754673245"
   },
   {
+    "id": 3,
     "firstName": "Andreea",
     "lastName": "Otet",
     "phone": "0765879435"
   },
   {
+    "id": 4,
     "firstName": "Rares",
     "lastName": "Ionescu",
     "phone": "0723638498"
   },
   {
+    "id": 5,
     "firstName": "Flavian",
     "lastName": "Rus",
     "phone": "0748947576"
-  }
+  },
 ]

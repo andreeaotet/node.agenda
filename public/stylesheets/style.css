@@ -7,6 +7,11 @@ a {
   color: #00B7FF;
 }
 
+#search {
+  padding: 5px;
+  margin: 15px;
+}
+
 table {
   border: solid;
   border-color: black;
@@ -33,12 +38,7 @@ thead {
   background-color: #00aeef;
 }
 
-#search {
-  padding: 5px;
-  margin: 15px;
+td input {
+  width: 100%;
+  padding: 4px;
 }
-
-/* #button1 {
-  padding: 5px;
-  margin: 15px;
-} */

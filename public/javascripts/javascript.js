@@ -1,21 +1,40 @@
-var phoneToEdit = "";
+let phoneToEdit = "";
 
+const API_URL = {
+    CREATE: `contacts/create`,
+    READ: `contacts`,
+    UPDATE:`contacts/update`,
+    DELETE:`contacts/delete`
+};
+
+// if we are on demo site
+if (true || location.host === "andreeaotet.github.io") {
+    API_URL.READ = 'data/contacts.json';
+}
+
+const loadContacts = () => {
+    $.ajax(API_URL.READ).done(contacts => {
+        window.globalContacts = contacts;
+        displayContacts(contacts);
+    });
+}
 
 function saveContact() {
-    var firstName = $('input[name=firstName]').val();
-    var lastName = document.querySelector('input[name=lastName]').value;
-    var phone = $('input[name=phone]').val();
+    const firstName = $('input[name=firstName]').val();
+    const lastName = document.querySelector('input[name=lastName]').value;
+    const phone = $('input[name=phone]').val();
 
     // console.debug('saveContact...');
 
-    var actionUrl = phoneToEdit ? 'contacts/update?id=' + phoneToEdit : 'contacts/create';
+    const actionUrl = phoneToEdit ? API_URL.UPDATE + '?id=' + phoneToEdit : API_URL.CREATE;
     
     $.post(actionUrl, {
         firstName,  //shortcut from ES6
         lastName,
         phone: phone // ES5 (key = value)
-    }).done(function (response) {
+    }).done(response => {
         // console.warn('done create contact', response);
+        phoneToEdit = '';
         if (response.success) {
             loadContacts();
         }
@@ -23,37 +42,31 @@ function saveContact() {
 }
 
 function displayContacts(contacts) {
-    var listItems = contacts.map(function (contact) {
+    var listItems = contacts.map(contact => {
+        const phone = contact.phone;
+        const info = phone.indexOf('http') === 0 ? `<a target="_blank"href="${phone}">${phone.replace('https://github.com/', '')}</a>` : phone;
         return `<tr>
                     <td>${contact.firstName}</td>
                     <td>${contact.lastName}</td>
-                    <td>${contact.phone}</td>
+                    <td>${info}</td>
                     <td>
-                        <a href="/contacts/delete?id=${contact.id}">&#10006;</a>
+                        <a href="${API_URL.DELETE}?id=${contact.id}">&#10006;</a>
                         <a href="#" class="edit" data-id="${contact.id}">&#9998;</a>
                     </td>
                 </tr>`;
     });
 
-    var resultList = document.querySelector('tbody');
-    resultList.innerHTML = listItems.join('');
+    document.querySelector('tbody').innerHTML = listItems.join('');
 }
 
-function loadContacts() {
-    $.ajax('contacts').done(function (contacts) {
-        window.globalContacts = contacts;
-        displayContacts(contacts);
-    });
-}
+
 
 
 function initEvents() {
     $("tbody").delegate("a.edit", "click", function () {
         phoneToEdit = this.getAttribute('data-id');
 
-        var contact = globalContacts.find(function (contact) {
-            return contact.id == phoneToEdit;
-        });
+        var contact = globalContacts.find(contact => contact.id == phoneToEdit);
         // console.warn("edit", phoneToEdit);
 
         $('input[name=phone]').val(contact.phone);
@@ -61,12 +74,11 @@ function initEvents() {
         document.querySelector('input[name=lastName]').value = contact.lastName;
     });
 
-    var findContact = document.getElementById('search');
-    findContact.addEventListener('input', searchContacts);
+    document.getElementById('search').addEventListener('input', searchContacts);
 }
 
-function searchContacts() {
-        var value = this.value.toLowerCase();
+function searchContacts(ev) {
+        const value = this.value.toLowerCase();
 
         var filteredContacts = globalContacts.filter(function(contact) {
             return contact.firstName.toLowerCase().includes(value) ||
